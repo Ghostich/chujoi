@@ -18,6 +18,8 @@
     --muted: #6a7a94;
     --border: rgba(255,255,255,0.07);
     --glow: rgba(232,160,32,0.18);
+    --success: #4caf82;
+    --error: #ff5a5a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,28 +44,29 @@
   }
   .logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 3px;
+    font-size: 28px; letter-spacing: 3px;
     color: var(--accent);
     text-shadow: 0 0 24px var(--glow);
   }
   .logo span { color: #fff; }
-  .lang-toggle {
-    display: flex; gap: 6px;
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-book-btn {
+    background: var(--accent); color: #000;
+    font-family: 'Barlow', sans-serif; font-weight: 700;
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 9px 20px; border-radius: 3px; border: none; cursor: pointer;
+    transition: all .2s;
   }
+  .nav-book-btn:hover { background: var(--accent2); }
+  .lang-toggle { display: flex; gap: 6px; }
   .lang-btn {
     background: none; border: 1px solid var(--border);
     color: var(--muted); padding: 6px 14px; border-radius: 4px;
     font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 600;
     letter-spacing: 1px; cursor: pointer; transition: all .2s;
   }
-  .lang-btn.active {
-    background: var(--accent); border-color: var(--accent);
-    color: #000;
-  }
-  .lang-btn:hover:not(.active) {
-    border-color: var(--accent); color: var(--accent);
-  }
+  .lang-btn.active { background: var(--accent); border-color: var(--accent); color: #000; }
+  .lang-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
 
   /* ---- HERO ---- */
   .hero {
@@ -71,8 +74,7 @@
     display: flex; align-items: center; justify-content: center;
     text-align: center;
     padding: 120px 24px 80px;
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
   .hero-bg {
     position: absolute; inset: 0;
@@ -85,245 +87,318 @@
   .crosshair {
     position: absolute; width: 220px; height: 220px;
     top: 50%; left: 50%; transform: translate(-50%,-140%);
-    opacity: 0.07;
-    animation: rotateSlow 20s linear infinite;
+    opacity: 0.07; animation: rotateSlow 20s linear infinite;
   }
   @keyframes rotateSlow { to { transform: translate(-50%,-140%) rotate(360deg); } }
-
   .hero-content { position: relative; z-index: 2; max-width: 780px; }
   .tag {
-    display: inline-block;
-    border: 1px solid var(--accent);
-    color: var(--accent);
+    display: inline-block; border: 1px solid var(--accent); color: var(--accent);
     font-size: 11px; font-weight: 700; letter-spacing: 3px;
-    padding: 6px 16px; border-radius: 2px;
-    margin-bottom: 28px;
-    text-transform: uppercase;
+    padding: 6px 16px; border-radius: 2px; margin-bottom: 28px; text-transform: uppercase;
   }
   h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(56px, 10vw, 100px);
-    line-height: 0.95;
-    letter-spacing: 2px;
-    color: #fff;
-    margin-bottom: 10px;
+    font-size: clamp(56px, 10vw, 100px); line-height: 0.95;
+    letter-spacing: 2px; color: #fff; margin-bottom: 10px;
   }
   h1 .hl { color: var(--accent); text-shadow: 0 0 40px var(--glow); }
-  .hero-sub {
-    font-size: 18px; color: var(--muted); max-width: 520px;
-    margin: 20px auto 44px; font-weight: 300; line-height: 1.7;
-  }
+  .hero-sub { font-size: 18px; color: var(--muted); max-width: 520px; margin: 20px auto 44px; font-weight: 300; line-height: 1.7; }
   .cta-btn {
-    display: inline-block;
-    background: var(--accent); color: #000;
+    display: inline-block; background: var(--accent); color: #000;
     font-family: 'Barlow', sans-serif; font-weight: 700;
     font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
-    padding: 16px 44px; border-radius: 3px;
-    text-decoration: none; border: none; cursor: pointer;
+    padding: 16px 44px; border-radius: 3px; text-decoration: none; border: none; cursor: pointer;
+    transition: all .25s; box-shadow: 0 0 32px rgba(232,160,32,0.25);
+  }
+  .cta-btn:hover { background: var(--accent2); box-shadow: 0 0 48px rgba(232,160,32,0.45); transform: translateY(-2px); }
+  .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .cta-btn-outline {
+    display: inline-block; background: transparent; color: var(--text);
+    border: 1px solid rgba(255,255,255,0.2);
+    font-family: 'Barlow', sans-serif; font-weight: 700;
+    font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 44px; border-radius: 3px; text-decoration: none; cursor: pointer;
     transition: all .25s;
-    box-shadow: 0 0 32px rgba(232,160,32,0.25);
   }
-  .cta-btn:hover {
-    background: var(--accent2);
-    box-shadow: 0 0 48px rgba(232,160,32,0.45);
-    transform: translateY(-2px);
-  }
-
-  .stats-row {
-    display: flex; gap: 48px; justify-content: center;
-    margin-top: 72px; flex-wrap: wrap;
-  }
+  .cta-btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .stats-row { display: flex; gap: 48px; justify-content: center; margin-top: 72px; flex-wrap: wrap; }
   .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 42px; color: var(--accent); letter-spacing: 2px;
-  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--accent); letter-spacing: 2px; }
   .stat-label { font-size: 12px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
 
   /* ---- SECTION ---- */
   section { padding: 100px 24px; }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(38px, 5vw, 60px);
-    letter-spacing: 2px; color: #fff;
-    margin-bottom: 12px;
-  }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 5vw, 60px); letter-spacing: 2px; color: #fff; margin-bottom: 12px; }
   .section-title .hl { color: var(--accent); }
   .section-sub { color: var(--muted); font-size: 16px; font-weight: 300; margin-bottom: 60px; }
   .section-inner { max-width: 1100px; margin: 0 auto; }
   .center { text-align: center; }
+  .divider { width: 48px; height: 2px; background: var(--accent); margin: 18px auto 0; }
+  .divider-left { margin-left: 0; }
 
   /* ---- FEATURES ---- */
-  .features-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-  }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
   .feat-card {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; padding: 36px 28px;
-    transition: border-color .25s, transform .25s;
+    border-radius: 8px; padding: 36px 28px; transition: border-color .25s, transform .25s;
   }
-  .feat-card:hover {
-    border-color: rgba(232,160,32,0.35);
-    transform: translateY(-4px);
-  }
-  .feat-icon {
-    font-size: 32px; margin-bottom: 18px;
-  }
-  .feat-card h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px; letter-spacing: 1px; color: #fff;
-    margin-bottom: 10px;
-  }
+  .feat-card:hover { border-color: rgba(232,160,32,0.35); transform: translateY(-4px); }
+  .feat-icon { font-size: 32px; margin-bottom: 18px; }
+  .feat-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; color: #fff; margin-bottom: 10px; }
   .feat-card p { font-size: 15px; color: var(--muted); line-height: 1.7; }
 
   /* ---- PRICING ---- */
   #pricing { background: var(--surface2); }
-  .pricing-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px; align-items: stretch;
-  }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: stretch; }
   .plan-card {
-    border-radius: 10px; padding: 40px 32px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    display: flex; flex-direction: column;
-    position: relative; overflow: hidden;
-    transition: transform .25s;
+    border-radius: 10px; padding: 40px 32px; border: 1px solid var(--border);
+    background: var(--surface); display: flex; flex-direction: column;
+    position: relative; overflow: hidden; transition: transform .25s;
   }
   .plan-card:hover { transform: translateY(-6px); }
-
-  /* Normal */
   .plan-normal { border-color: rgba(255,255,255,0.12); }
-  /* Gold */
-  .plan-gold {
-    border-color: var(--gold);
-    box-shadow: 0 0 40px rgba(212,160,23,0.15);
-  }
-  .plan-gold::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(212,160,23,0.06) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  /* Premium */
-  .plan-premium {
-    border-color: var(--premium);
-    box-shadow: 0 0 50px rgba(123,79,255,0.18);
-    background: linear-gradient(160deg, #0f0a1e 0%, var(--surface) 60%);
-  }
-  .plan-premium::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(123,79,255,0.1) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .plan-badge {
-    position: absolute; top: 18px; right: 18px;
-    font-size: 10px; font-weight: 700; letter-spacing: 2px;
-    padding: 4px 10px; border-radius: 2px; text-transform: uppercase;
-  }
+  .plan-gold { border-color: var(--gold); box-shadow: 0 0 40px rgba(212,160,23,0.15); }
+  .plan-gold::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(212,160,23,0.06) 0%, transparent 60%); pointer-events: none; }
+  .plan-premium { border-color: var(--premium); box-shadow: 0 0 50px rgba(123,79,255,0.18); background: linear-gradient(160deg, #0f0a1e 0%, var(--surface) 60%); }
+  .plan-premium::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(123,79,255,0.1) 0%, transparent 60%); pointer-events: none; }
+  .plan-badge { position: absolute; top: 18px; right: 18px; font-size: 10px; font-weight: 700; letter-spacing: 2px; padding: 4px 10px; border-radius: 2px; text-transform: uppercase; }
   .badge-gold { background: var(--gold); color: #000; }
   .badge-premium { background: var(--premium); color: #fff; }
-
-  .plan-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px; letter-spacing: 2px;
-    margin-bottom: 6px;
-  }
+  .plan-name { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; margin-bottom: 6px; }
   .plan-normal .plan-name { color: var(--text); }
   .plan-gold .plan-name { color: var(--gold); }
   .plan-premium .plan-name { color: #a07fff; }
-
-  .plan-price {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px; line-height: 1;
-    color: #fff; margin: 20px 0 6px;
-  }
+  .plan-price { font-family: 'Bebas Neue', sans-serif; font-size: 52px; line-height: 1; color: #fff; margin: 20px 0 6px; }
   .plan-price span { font-size: 22px; color: var(--muted); }
   .plan-duration { font-size: 13px; color: var(--muted); margin-bottom: 30px; letter-spacing: 1px; }
-
   .plan-features { list-style: none; margin-bottom: 36px; flex: 1; }
-  .plan-features li {
-    padding: 10px 0; font-size: 15px; color: var(--text);
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 10px;
-  }
+  .plan-features li { padding: 10px 0; font-size: 15px; color: var(--text); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
   .plan-features li:last-child { border-bottom: none; }
   .check-normal { color: var(--muted); font-size: 16px; }
   .check-gold { color: var(--gold); font-size: 16px; }
   .check-premium { color: #a07fff; font-size: 16px; }
-
   .plan-btn {
-    display: block; text-align: center;
-    padding: 14px; border-radius: 4px;
-    font-weight: 700; font-size: 13px; letter-spacing: 2px;
-    text-transform: uppercase; cursor: pointer;
-    border: none; text-decoration: none;
-    transition: all .22s;
+    display: block; text-align: center; padding: 14px; border-radius: 4px;
+    font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; border: none; text-decoration: none; transition: all .22s;
   }
-  .btn-normal {
-    background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text);
-  }
+  .btn-normal { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text); }
   .btn-normal:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.05); }
-  .btn-gold {
-    background: var(--gold); color: #000;
-    box-shadow: 0 0 24px rgba(212,160,23,0.3);
-  }
+  .btn-gold { background: var(--gold); color: #000; box-shadow: 0 0 24px rgba(212,160,23,0.3); }
   .btn-gold:hover { background: #e6b520; box-shadow: 0 0 40px rgba(212,160,23,0.5); }
-  .btn-premium {
-    background: var(--premium); color: #fff;
-    box-shadow: 0 0 28px rgba(123,79,255,0.35);
-  }
+  .btn-premium { background: var(--premium); color: #fff; box-shadow: 0 0 28px rgba(123,79,255,0.35); }
   .btn-premium:hover { background: #8f5fff; box-shadow: 0 0 48px rgba(123,79,255,0.55); }
 
   /* ---- COACH ---- */
   .coach-section { background: var(--bg); }
-  .coach-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 48px;
-    display: flex; gap: 48px; align-items: center; flex-wrap: wrap;
-  }
-  .coach-avatar {
-    width: 120px; height: 120px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--premium) 100%);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 48px; flex-shrink: 0;
-    box-shadow: 0 0 40px rgba(232,160,32,0.2);
-  }
-  .coach-info h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 34px; letter-spacing: 2px; color: #fff; margin-bottom: 6px;
-  }
+  .coach-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 48px; display: flex; gap: 48px; align-items: center; flex-wrap: wrap; }
+  .coach-avatar { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, var(--premium) 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; flex-shrink: 0; box-shadow: 0 0 40px rgba(232,160,32,0.2); }
+  .coach-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 2px; color: #fff; margin-bottom: 6px; }
   .coach-rank { color: var(--accent); font-size: 13px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; margin-bottom: 14px; }
   .coach-bio { color: var(--muted); font-size: 15px; max-width: 540px; line-height: 1.8; }
 
-  /* ---- FOOTER ---- */
-  footer {
-    text-align: center; padding: 40px 24px;
-    border-top: 1px solid var(--border);
-    color: var(--muted); font-size: 13px; letter-spacing: 1px;
+  /* ---- BOOKING & REGISTRATION SECTION ---- */
+  #booking { background: var(--bg); }
+  .booking-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 52px;
   }
-  footer .logo-sm {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px; color: var(--accent); letter-spacing: 3px;
-    margin-bottom: 12px;
-  }
+  @media (max-width: 900px) { .booking-layout { grid-template-columns: 1fr; } }
 
-  /* DIVIDER */
-  .divider {
-    width: 48px; height: 2px; background: var(--accent);
-    margin: 18px auto 0;
+  /* ---- CALENDAR ---- */
+  .calendar-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 36px; display: flex; flex-direction: column; gap: 24px;
   }
-  .divider-left { margin-left: 0; }
+  .calendar-card h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: var(--accent); margin-bottom: 4px;
+  }
+  .calendar-card .sub { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+
+  .cal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .cal-month {
+    font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: #fff;
+  }
+  .cal-nav { background: none; border: 1px solid var(--border); color: var(--muted); width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+  .cal-nav:hover { border-color: var(--accent); color: var(--accent); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-day-name { text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 1px; padding: 6px 0; text-transform: uppercase; }
+  .cal-day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: all .18s; position: relative; border: 1px solid transparent;
+  }
+  .cal-day:not(.empty):not(.past):hover { background: rgba(232,160,32,0.12); border-color: rgba(232,160,32,0.3); color: var(--accent); }
+  .cal-day.today { border-color: var(--accent); color: var(--accent); }
+  .cal-day.selected { background: var(--accent); color: #000; font-weight: 700; border-color: var(--accent); }
+  .cal-day.past { color: rgba(106,122,148,0.35); cursor: not-allowed; }
+  .cal-day.empty { cursor: default; }
+  .cal-day.has-slot::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--success); }
+  .cal-day.selected::after { background: #000; }
+
+  /* Time slots */
+  .time-slots-wrap { display: flex; flex-direction: column; gap: 12px; }
+  .time-slots-label { font-size: 13px; color: var(--muted); letter-spacing: 1px; font-weight: 600; text-transform: uppercase; }
+  .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .time-slot {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 10px 6px; text-align: center;
+    font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text);
+    transition: all .18s; letter-spacing: 0.5px;
+  }
+  .time-slot:hover { border-color: var(--accent); color: var(--accent); }
+  .time-slot.selected { background: rgba(232,160,32,0.15); border-color: var(--accent); color: var(--accent); }
+  .time-slot.booked { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+  .no-date-msg { color: var(--muted); font-size: 14px; text-align: center; padding: 20px 0; }
+
+  /* Session type selector */
+  .session-types { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
+  .session-type {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 12px; cursor: pointer; transition: all .18s;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .session-type:hover { border-color: rgba(232,160,32,0.3); }
+  .session-type.active { border-color: var(--accent); background: rgba(232,160,32,0.08); }
+  .session-type .st-icon { font-size: 20px; }
+  .session-type .st-name { font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: 0.5px; }
+  .session-type .st-dur { font-size: 11px; color: var(--muted); }
+
+  /* Booking confirm button */
+  .confirm-booking-btn {
+    width: 100%; padding: 16px; border-radius: 6px;
+    background: var(--accent); color: #000; border: none; cursor: pointer;
+    font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 14px;
+    letter-spacing: 2px; text-transform: uppercase; transition: all .22s;
+    box-shadow: 0 0 24px rgba(232,160,32,0.25);
+  }
+  .confirm-booking-btn:hover { background: var(--accent2); box-shadow: 0 0 40px rgba(232,160,32,0.4); }
+  .confirm-booking-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* Booking summary pill */
+  .booking-summary {
+    background: rgba(232,160,32,0.08); border: 1px solid rgba(232,160,32,0.25);
+    border-radius: 8px; padding: 14px 16px; font-size: 14px;
+    display: none; flex-direction: column; gap: 6px;
+  }
+  .booking-summary.show { display: flex; }
+  .booking-summary .bs-row { display: flex; justify-content: space-between; align-items: center; }
+  .booking-summary .bs-label { color: var(--muted); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .booking-summary .bs-val { color: var(--accent); font-weight: 600; }
+
+  /* ---- REGISTER CARD ---- */
+  .register-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 36px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .register-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: var(--premium); margin-bottom: 4px; }
+  .register-card .sub { font-size: 13px; color: var(--muted); letter-spacing: 1px; margin-bottom: 20px; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; margin-bottom: 7px; color: var(--text); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; background: #0d1525; border: 1px solid var(--border);
+    color: #fff; padding: 13px 14px; border-radius: 6px;
+    font-family: 'Barlow', 'Noto Sans Georgian', sans-serif; font-size: 14px;
+    transition: border-color .2s; outline: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: rgba(123,79,255,0.5); }
+  .form-group input.error,
+  .form-group textarea.error,
+  .form-group select.error { border-color: var(--error); }
+  .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a7a94' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .field-error { color: var(--error); font-size: 12px; margin-top: 5px; display: none; }
+  .field-error.show { display: block; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+  .plan-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
+  .plan-opt {
+    border: 1px solid var(--border); border-radius: 6px; padding: 12px 8px;
+    text-align: center; cursor: pointer; transition: all .18s;
+  }
+  .plan-opt:hover { border-color: rgba(123,79,255,0.4); }
+  .plan-opt.sel-normal.active { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
+  .plan-opt.sel-gold.active { border-color: var(--gold); background: rgba(212,160,23,0.08); }
+  .plan-opt.sel-premium.active { border-color: var(--premium); background: rgba(123,79,255,0.08); }
+  .plan-opt .po-name { font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+  .plan-opt.sel-normal .po-name { color: var(--text); }
+  .plan-opt.sel-gold .po-name { color: var(--gold); }
+  .plan-opt.sel-premium .po-name { color: #a07fff; }
+  .plan-opt .po-price { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .submit-btn {
+    width: 100%; padding: 16px; border-radius: 6px;
+    background: var(--premium); color: #fff; border: none; cursor: pointer;
+    font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 14px;
+    letter-spacing: 2px; text-transform: uppercase; transition: all .22s; margin-top: 8px;
+    box-shadow: 0 0 28px rgba(123,79,255,0.3);
+  }
+  .submit-btn:hover { background: #8f5fff; box-shadow: 0 0 48px rgba(123,79,255,0.5); transform: translateY(-1px); }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* Success states */
+  .success-panel {
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 40px 20px; gap: 16px; flex: 1;
+  }
+  .success-panel.show { display: flex; }
+  .success-icon { font-size: 52px; animation: popIn .4s ease; }
+  @keyframes popIn { 0%{transform:scale(0)} 70%{transform:scale(1.15)} 100%{transform:scale(1)} }
+  .success-panel h4 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: #fff; }
+  .success-panel p { color: var(--muted); font-size: 15px; max-width: 320px; }
+  .success-panel .reset-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 13px; letter-spacing: 1px; transition: all .2s; margin-top: 8px; }
+  .success-panel .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Booking confirm modal overlay */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px); z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 44px 36px; max-width: 420px; width: 90%;
+    text-align: center; position: relative;
+    transform: translateY(20px); transition: transform .25s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+  .modal-close:hover { color: #fff; }
+  .modal h3 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; color: #fff; margin-bottom: 10px; }
+  .modal p { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
+  .modal-details { background: rgba(232,160,32,0.07); border: 1px solid rgba(232,160,32,0.2); border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; text-align: left; display: flex; flex-direction: column; gap: 10px; }
+  .modal-details .md-row { display: flex; justify-content: space-between; font-size: 14px; }
+  .modal-details .md-label { color: var(--muted); }
+  .modal-details .md-val { color: var(--accent); font-weight: 600; }
+  .modal-confirm-btn { width: 100%; padding: 15px; background: var(--accent); color: #000; border: none; border-radius: 6px; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all .2s; }
+  .modal-confirm-btn:hover { background: var(--accent2); }
+
+  /* ---- FOOTER ---- */
+  footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; letter-spacing: 1px; }
+  footer .logo-sm { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--accent); letter-spacing: 3px; margin-bottom: 12px; }
 
   /* Scroll animation */
-  .fade-up {
-    opacity: 0; transform: translateY(30px);
-    transition: opacity .6s ease, transform .6s ease;
-  }
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
   @media (max-width: 600px) {
     nav { padding: 14px 20px; }
@@ -332,24 +407,46 @@
     .coach-card { flex-direction: column; text-align: center; padding: 32px 24px; }
     .coach-avatar { margin: 0 auto; }
     .divider-left { margin: 18px auto 0; }
+    .nav-book-btn { display: none; }
+    .time-slots { grid-template-columns: repeat(2, 1fr); }
+    .session-types { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
+<!-- BOOKING CONFIRM MODAL -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="font-size:44px;margin-bottom:12px;">📅</div>
+    <h3 data-en="CONFIRM BOOKING" data-ka="დაჯავშნის დადასტურება">CONFIRM BOOKING</h3>
+    <p data-en="Please confirm your session details below." data-ka="გთხოვთ დაადასტუროთ სეანსის დეტალები.">Please confirm your session details below.</p>
+    <div class="modal-details">
+      <div class="md-row"><span class="md-label" data-en="Date" data-ka="თარიღი">Date</span><span class="md-val" id="modalDate">—</span></div>
+      <div class="md-row"><span class="md-label" data-en="Time" data-ka="დრო">Time</span><span class="md-val" id="modalTime">—</span></div>
+      <div class="md-row"><span class="md-label" data-en="Session" data-ka="სეანსი">Session</span><span class="md-val" id="modalSession">—</span></div>
+      <div class="md-row"><span class="md-label" data-en="Duration" data-ka="ხანგრძლივობა">Duration</span><span class="md-val" id="modalDuration">—</span></div>
+    </div>
+    <button class="modal-confirm-btn" onclick="finalizeBooking()" data-en="✓ CONFIRM BOOKING" data-ka="✓ დაჯავშნის დადასტურება">✓ CONFIRM BOOKING</button>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
   <div class="logo"><span>CS2</span> COACH</div>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('ka')">ქარ</button>
+  <div class="nav-right">
+    <button class="nav-book-btn" onclick="scrollTo('#booking')" data-en="BOOK SESSION" data-ka="სეანსის ჯავშანი">BOOK SESSION</button>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ka')">ქარ</button>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <!-- Crosshair SVG -->
   <svg class="crosshair" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="100" cy="100" r="90" stroke="white" stroke-width="2"/>
     <circle cx="100" cy="100" r="60" stroke="white" stroke-width="1" stroke-dasharray="8 6"/>
@@ -361,7 +458,6 @@
     <line x1="100" y1="40" x2="100" y2="52" stroke="white" stroke-width="1.5" opacity=".5"/>
     <line x1="148" y1="100" x2="160" y2="100" stroke="white" stroke-width="1.5" opacity=".5"/>
   </svg>
-
   <div class="hero-content">
     <div class="tag" data-en="Professional CS2 Coaching" data-ka="პროფესიონალური CS2 კოუჩინგი">Professional CS2 Coaching</div>
     <h1>
@@ -369,25 +465,15 @@
       <span class="hl" data-en="THE GAME" data-ka="თამაშს">THE GAME</span>
     </h1>
     <p class="hero-sub" data-en="Unlock your true potential with elite CS2 coaching. From crosshair placement to strategy — we sharpen every skill." data-ka="გამოავლინე შენი ნამდვილი პოტენციალი ელიტური CS2 კოუჩინგით. კროსჰეარის პოზიციონირებიდან სტრატეგიამდე — ვხვეწავთ ყველა უნარს.">Unlock your true potential with elite CS2 coaching. From crosshair placement to strategy — we sharpen every skill.</p>
-    <a href="#pricing" class="cta-btn" data-en="CHOOSE YOUR PLAN" data-ka="აირჩიე შენი გეგმა">CHOOSE YOUR PLAN</a>
-
+    <div class="hero-ctas">
+      <a href="#pricing" class="cta-btn" data-en="CHOOSE YOUR PLAN" data-ka="აირჩიე შენი გეგმა">CHOOSE YOUR PLAN</a>
+      <a href="#booking" class="cta-btn-outline" data-en="BOOK A SESSION" data-ka="სეანსის ჯავშანი">BOOK A SESSION</a>
+    </div>
     <div class="stats-row">
-      <div class="stat">
-        <div class="stat-num">500+</div>
-        <div class="stat-label" data-en="Students" data-ka="სტუდენტი">Students</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">4</div>
-        <div class="stat-label" data-en="Years Experience" data-ka="წლის გამოცდილება">Years Experience</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">GE1</div>
-        <div class="stat-label" data-en="Peak Rank" data-ka="მაქსიმალური რანგი">Peak Rank</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">95%</div>
-        <div class="stat-label" data-en="Rank Up Rate" data-ka="რანგის ზრდის მაჩვენებელი">Rank Up Rate</div>
-      </div>
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label" data-en="Students" data-ka="სტუდენტი">Students</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label" data-en="Years Experience" data-ka="წლის გამოცდილება">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">GE1</div><div class="stat-label" data-en="Peak Rank" data-ka="მაქსიმალური რანგი">Peak Rank</div></div>
+      <div class="stat"><div class="stat-num">95%</div><div class="stat-label" data-en="Rank Up Rate" data-ka="რანგის ზრდის მაჩვენებელი">Rank Up Rate</div></div>
     </div>
   </div>
 </section>
@@ -401,36 +487,12 @@
       <div class="divider"></div>
     </div>
     <div style="margin-top:52px;" class="features-grid">
-      <div class="feat-card fade-up">
-        <div class="feat-icon">🎯</div>
-        <h3 data-en="AIM TRAINING" data-ka="სამიზნის ვარჯიში">AIM TRAINING</h3>
-        <p data-en="Custom aim routines, crosshair placement drills, and flick shot mastery sessions." data-ka="ინდივიდუალური aim ვარჯიშები, კროსჰეარის პოზიციონირების დრილები და ფლიქ-შოთების დახვეწა.">Custom aim routines, crosshair placement drills, and flick shot mastery sessions.</p>
-      </div>
-      <div class="feat-card fade-up">
-        <div class="feat-icon">🗺️</div>
-        <h3 data-en="MAP CONTROL" data-ka="რუქის კონტროლი">MAP CONTROL</h3>
-        <p data-en="Deep dive into map positions, utility usage, and controlling key areas before the enemy does." data-ka="რუკის პოზიციების, utility-ის გამოყენებისა და მნიშვნელოვანი ზონების კონტროლის სიღრმისეული ანალიზი.">Deep dive into map positions, utility usage, and controlling key areas before the enemy does.</p>
-      </div>
-      <div class="feat-card fade-up">
-        <div class="feat-icon">🧠</div>
-        <h3 data-en="GAME SENSE" data-ka="Game Sense">GAME SENSE</h3>
-        <p data-en="Learn to read opponents, anticipate rotations, and make faster, smarter decisions under pressure." data-ka="ისწავლე მოწინააღმდეგის წაკითხვა, როტაციების გათვლა და სწრაფი, ჭკვიანი გადაწყვეტილებების მიღება.">Learn to read opponents, anticipate rotations, and make faster, smarter decisions under pressure.</p>
-      </div>
-      <div class="feat-card fade-up">
-        <div class="feat-icon">🎬</div>
-        <h3 data-en="VOD REVIEW" data-ka="VOD მიმოხილვა">VOD REVIEW</h3>
-        <p data-en="Your demos analyzed round by round. Every mistake caught, every opportunity missed — exposed and fixed." data-ka="შენი დემოები ანალიზდება რაუნდ-რაუნდ. ყოველი შეცდომა, ყოველი გამოტოვებული შანსი — გამოვლენილი და გამოსწორებული.">Your demos analyzed round by round. Every mistake caught, every opportunity missed — exposed and fixed.</p>
-      </div>
-      <div class="feat-card fade-up">
-        <div class="feat-icon">📞</div>
-        <h3 data-en="LIVE SESSIONS" data-ka="პირდაპირი სეანსები">LIVE SESSIONS</h3>
-        <p data-en="Real-time coaching via Discord while you play — instant feedback as you make decisions." data-ka="რეალურ დროში კოუჩინგი Discord-ის საშუალებით თამაშის დროს — მყისიერი feedback თითოეულ გადაწყვეტილებაზე.">Real-time coaching via Discord while you play — instant feedback as you make decisions.</p>
-      </div>
-      <div class="feat-card fade-up">
-        <div class="feat-icon">📈</div>
-        <h3 data-en="PROGRESS TRACKING" data-ka="პროგრესის მონიტორინგი">PROGRESS TRACKING</h3>
-        <p data-en="Weekly stats, improvement metrics, and milestone reports so you always know you're leveling up." data-ka="ყოველკვირეული სტატისტიკა, პროგრესის მეტრიკა და ეტაპობრივი ანგარიშები — ყოველთვის ხედავ შენს ზრდას.">Weekly stats, improvement metrics, and milestone reports so you always know you're leveling up.</p>
-      </div>
+      <div class="feat-card fade-up"><div class="feat-icon">🎯</div><h3 data-en="AIM TRAINING" data-ka="სამიზნის ვარჯიში">AIM TRAINING</h3><p data-en="Custom aim routines, crosshair placement drills, and flick shot mastery sessions." data-ka="ინდივიდუალური aim ვარჯიშები, კროსჰეარის პოზიციონირების დრილები და ფლიქ-შოთების დახვეწა.">Custom aim routines, crosshair placement drills, and flick shot mastery sessions.</p></div>
+      <div class="feat-card fade-up"><div class="feat-icon">🗺️</div><h3 data-en="MAP CONTROL" data-ka="რუქის კონტროლი">MAP CONTROL</h3><p data-en="Deep dive into map positions, utility usage, and controlling key areas before the enemy does." data-ka="რუკის პოზიციების, utility-ის გამოყენებისა და მნიშვნელოვანი ზონების კონტროლის სიღრმისეული ანალიზი.">Deep dive into map positions, utility usage, and controlling key areas before the enemy does.</p></div>
+      <div class="feat-card fade-up"><div class="feat-icon">🧠</div><h3 data-en="GAME SENSE" data-ka="Game Sense">GAME SENSE</h3><p data-en="Learn to read opponents, anticipate rotations, and make faster, smarter decisions under pressure." data-ka="ისწავლე მოწინააღმდეგის წაკითხვა, როტაციების გათვლა და სწრაფი, ჭკვიანი გადაწყვეტილებების მიღება.">Learn to read opponents, anticipate rotations, and make faster, smarter decisions under pressure.</p></div>
+      <div class="feat-card fade-up"><div class="feat-icon">🎬</div><h3 data-en="VOD REVIEW" data-ka="VOD მიმოხილვა">VOD REVIEW</h3><p data-en="Your demos analyzed round by round. Every mistake caught, every opportunity missed — exposed and fixed." data-ka="შენი დემოები ანალიზდება რაუნდ-რაუნდ. ყოველი შეცდომა, ყოველი გამოტოვებული შანსი — გამოვლენილი და გამოსწორებული.">Your demos analyzed round by round. Every mistake caught, every opportunity missed — exposed and fixed.</p></div>
+      <div class="feat-card fade-up"><div class="feat-icon">📞</div><h3 data-en="LIVE SESSIONS" data-ka="პირდაპირი სეანსები">LIVE SESSIONS</h3><p data-en="Real-time coaching via Discord while you play — instant feedback as you make decisions." data-ka="რეალურ დროში კოუჩინგი Discord-ის საშუალებით თამაშის დროს — მყისიერი feedback თითოეულ გადაწყვეტილებაზე.">Real-time coaching via Discord while you play — instant feedback as you make decisions.</p></div>
+      <div class="feat-card fade-up"><div class="feat-icon">📈</div><h3 data-en="PROGRESS TRACKING" data-ka="პროგრესის მონიტორინგი">PROGRESS TRACKING</h3><p data-en="Weekly stats, improvement metrics, and milestone reports so you always know you're leveling up." data-ka="ყოველკვირეული სტატისტიკა, პროგრესის მეტრიკა და ეტაპობრივი ანგარიშები — ყოველთვის ხედავ შენს ზრდას.">Weekly stats, improvement metrics, and milestone reports so you always know you're leveling up.</p></div>
     </div>
   </div>
 </section>
@@ -444,11 +506,9 @@
       <div class="divider"></div>
     </div>
     <div style="margin-top:52px;" class="pricing-grid">
-
-      <!-- NORMAL -->
       <div class="plan-card plan-normal fade-up">
         <div class="plan-name" data-en="NORMAL" data-ka="სტანდარტული">NORMAL</div>
-        <div class="plan-price">$<span data-price-usd="19">19</span><span>/mo</span></div>
+        <div class="plan-price">$19<span>/mo</span></div>
         <div class="plan-duration" data-en="4 sessions / month" data-ka="4 სეანსი / თვეში">4 sessions / month</div>
         <ul class="plan-features">
           <li><span class="check-normal">✓</span><span data-en="2x VOD Review (30 min each)" data-ka="2x VOD მიმოხილვა (30 წთ ყოველი)">2x VOD Review (30 min each)</span></li>
@@ -458,14 +518,12 @@
           <li style="opacity:.35;"><span>✗</span><span data-en="Live coaching sessions" data-ka="პირდაპირი კოუჩინგ სეანსები">Live coaching sessions</span></li>
           <li style="opacity:.35;"><span>✗</span><span data-en="Custom strategy plan" data-ka="ინდივიდუალური სტრატეგიის გეგმა">Custom strategy plan</span></li>
         </ul>
-        <button class="plan-btn btn-normal" data-en="GET STARTED" data-ka="დაწყება">GET STARTED</button>
+        <button class="plan-btn btn-normal" onclick="scrollTo('#booking')" data-en="GET STARTED" data-ka="დაწყება">GET STARTED</button>
       </div>
-
-      <!-- GOLD -->
       <div class="plan-card plan-gold fade-up">
         <div class="plan-badge badge-gold" data-en="POPULAR" data-ka="პოპულარული">POPULAR</div>
         <div class="plan-name" data-en="GOLD" data-ka="ოქრო">GOLD</div>
-        <div class="plan-price">$<span data-price-usd="39">39</span><span>/mo</span></div>
+        <div class="plan-price">$39<span>/mo</span></div>
         <div class="plan-duration" data-en="8 sessions / month" data-ka="8 სეანსი / თვეში">8 sessions / month</div>
         <ul class="plan-features">
           <li><span class="check-gold">✓</span><span data-en="4x VOD Review (45 min each)" data-ka="4x VOD მიმოხილვა (45 წთ ყოველი)">4x VOD Review (45 min each)</span></li>
@@ -475,14 +533,12 @@
           <li><span class="check-gold">✓</span><span data-en="Discord priority support" data-ka="Discord-ის პრიორიტეტული მხარდაჭერა">Discord priority support</span></li>
           <li style="opacity:.35;"><span>✗</span><span data-en="Unlimited messaging" data-ka="შეუზღუდავი მიმოწერა">Unlimited messaging</span></li>
         </ul>
-        <button class="plan-btn btn-gold" data-en="GET GOLD" data-ka="ოქროს გეგმა">GET GOLD</button>
+        <button class="plan-btn btn-gold" onclick="scrollTo('#booking')" data-en="GET GOLD" data-ka="ოქროს გეგმა">GET GOLD</button>
       </div>
-
-      <!-- PREMIUM -->
       <div class="plan-card plan-premium fade-up">
         <div class="plan-badge badge-premium" data-en="ELITE" data-ka="ელიტა">ELITE</div>
         <div class="plan-name" data-en="PREMIUM" data-ka="პრემიუმი">PREMIUM</div>
-        <div class="plan-price">$<span data-price-usd="79">79</span><span>/mo</span></div>
+        <div class="plan-price">$79<span>/mo</span></div>
         <div class="plan-duration" data-en="Unlimited sessions" data-ka="შეუზღუდავი სეანსები">Unlimited sessions</div>
         <ul class="plan-features">
           <li><span class="check-premium">✓</span><span data-en="Unlimited VOD Reviews" data-ka="შეუზღუდავი VOD მიმოხილვა">Unlimited VOD Reviews</span></li>
@@ -492,9 +548,8 @@
           <li><span class="check-premium">✓</span><span data-en="Mental performance coaching" data-ka="მენტალური მომზადების კოუჩინგი">Mental performance coaching</span></li>
           <li><span class="check-premium">✓</span><span data-en="Weekly 1-on-1 video call" data-ka="ყოველკვირეული 1-1 ვიდეო ზარი">Weekly 1-on-1 video call</span></li>
         </ul>
-        <button class="plan-btn btn-premium" data-en="GO PREMIUM" data-ka="პრემიუმ გეგმა">GO PREMIUM</button>
+        <button class="plan-btn btn-premium" onclick="scrollTo('#booking')" data-en="GO PREMIUM" data-ka="პრემიუმ გეგმა">GO PREMIUM</button>
       </div>
-
     </div>
   </div>
 </section>
@@ -517,47 +572,475 @@
   </div>
 </section>
 
+<!-- BOOKING + REGISTER -->
+<section id="booking">
+  <div class="section-inner">
+    <div class="center fade-up">
+      <div class="section-title" data-en="BOOK & <span class='hl'>REGISTER</span>" data-ka="ჯავშანი & <span class='hl'>რეგისტრაცია</span>">BOOK & <span class='hl'>REGISTER</span></div>
+      <p class="section-sub" data-en="Pick a session time and fill in your details to get started." data-ka="აირჩიე სეანსის დრო და შეავსე შენი მონაცემები.">Pick a session time and fill in your details to get started.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="booking-layout">
+
+      <!-- CALENDAR CARD -->
+      <div class="calendar-card fade-up">
+        <div>
+          <h3 data-en="📅 BOOK A SESSION" data-ka="📅 სეანსის ჯავშანი">📅 BOOK A SESSION</h3>
+          <div class="sub" data-en="CHOOSE DATE · TIME · SESSION TYPE" data-ka="აირჩიე თარიღი · დრო · სეანსის ტიპი">CHOOSE DATE · TIME · SESSION TYPE</div>
+        </div>
+
+        <!-- Session type -->
+        <div>
+          <div class="time-slots-label" style="margin-bottom:10px;" data-en="SESSION TYPE" data-ka="სეანსის ტიპი">SESSION TYPE</div>
+          <div class="session-types">
+            <div class="session-type active" data-type="VOD Review" data-dur="45 min" onclick="selectSessionType(this)">
+              <div class="st-icon">🎬</div>
+              <div class="st-name" data-en="VOD REVIEW" data-ka="VOD მიმოხილვა">VOD REVIEW</div>
+              <div class="st-dur">45 min</div>
+            </div>
+            <div class="session-type" data-type="Live Coaching" data-dur="60 min" onclick="selectSessionType(this)">
+              <div class="st-icon">📞</div>
+              <div class="st-name" data-en="LIVE COACHING" data-ka="პირდაპირი კოუჩინგი">LIVE COACHING</div>
+              <div class="st-dur">60 min</div>
+            </div>
+            <div class="session-type" data-type="Aim Training" data-dur="30 min" onclick="selectSessionType(this)">
+              <div class="st-icon">🎯</div>
+              <div class="st-name" data-en="AIM TRAINING" data-ka="სამიზნის ვარჯიში">AIM TRAINING</div>
+              <div class="st-dur">30 min</div>
+            </div>
+            <div class="session-type" data-type="Strategy Deep-Dive" data-dur="90 min" onclick="selectSessionType(this)">
+              <div class="st-icon">🧠</div>
+              <div class="st-name" data-en="STRATEGY" data-ka="სტრატეგია">STRATEGY</div>
+              <div class="st-dur">90 min</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar -->
+        <div>
+          <div class="cal-header">
+            <button class="cal-nav" onclick="changeMonth(-1)">&#8249;</button>
+            <div class="cal-month" id="calMonthLabel"></div>
+            <button class="cal-nav" onclick="changeMonth(1)">&#8250;</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+
+        <!-- Time Slots -->
+        <div class="time-slots-wrap">
+          <div class="time-slots-label" data-en="AVAILABLE TIMES" data-ka="ხელმისაწვდომი დრო">AVAILABLE TIMES</div>
+          <div id="timeSlotsContainer">
+            <div class="no-date-msg" data-en="← Select a date to see available times" data-ka="← აირჩიე თარიღი ხელმისაწვდომი დროის სანახავად">← Select a date to see available times</div>
+          </div>
+        </div>
+
+        <!-- Booking Summary -->
+        <div class="booking-summary" id="bookingSummary">
+          <div class="bs-row"><span class="bs-label" data-en="Date" data-ka="თარიღი">Date</span><span class="bs-val" id="summaryDate">—</span></div>
+          <div class="bs-row"><span class="bs-label" data-en="Time" data-ka="დრო">Time</span><span class="bs-val" id="summaryTime">—</span></div>
+          <div class="bs-row"><span class="bs-label" data-en="Session" data-ka="სეანსი">Session</span><span class="bs-val" id="summarySession">—</span></div>
+        </div>
+
+        <button class="confirm-booking-btn" id="confirmBookingBtn" onclick="openModal()" disabled data-en="CONFIRM BOOKING →" data-ka="დაჯავშნის დადასტურება →">CONFIRM BOOKING →</button>
+      </div>
+
+      <!-- REGISTER CARD -->
+      <div class="register-card fade-up" id="registerCard">
+        <h3 data-en="CREATE ACCOUNT" data-ka="ანგარიშის შექმნა">CREATE ACCOUNT</h3>
+        <div class="sub" data-en="JOIN 500+ STUDENTS · FREE TO REGISTER" data-ka="შეუერთდი 500+ სტუდენტს · რეგისტრაცია უფასოა">JOIN 500+ STUDENTS · FREE TO REGISTER</div>
+
+        <!-- Success panel -->
+        <div class="success-panel" id="regSuccessPanel">
+          <div class="success-icon">🏆</div>
+          <h4 data-en="WELCOME TO THE TEAM!" data-ka="კეთილი იყოს შენი მობრძანება!">WELCOME TO THE TEAM!</h4>
+          <p data-en="Your account has been created. Check your email for next steps and Discord invite." data-ka="შენი ანგარიში შეიქმნა. შეამოწმე ელფოსტა შემდეგი ნაბიჯებისთვის.">Your account has been created. Check your email for next steps and Discord invite.</p>
+          <button class="reset-btn" onclick="resetForm()" data-en="Register Another" data-ka="კიდევ ერთი რეგისტრაცია">Register Another</button>
+        </div>
+
+        <!-- Form -->
+        <div id="regForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-en="First Name *" data-ka="სახელი *">First Name *</label>
+              <input type="text" id="firstName" placeholder="John">
+              <div class="field-error" id="firstNameErr" data-en="Required" data-ka="სავალდებულო">Required</div>
+            </div>
+            <div class="form-group">
+              <label data-en="Last Name *" data-ka="გვარი *">Last Name *</label>
+              <input type="text" id="lastName" placeholder="Doe">
+              <div class="field-error" id="lastNameErr" data-en="Required" data-ka="სავალდებულო">Required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-en="Email Address *" data-ka="ელფოსტა *">Email Address *</label>
+            <input type="email" id="email" placeholder="john@example.com">
+            <div class="field-error" id="emailErr" data-en="Valid email required" data-ka="შეიყვანეთ სწორი ელფოსტა">Valid email required</div>
+          </div>
+
+          <div class="form-group">
+            <label data-en="Discord Username *" data-ka="Discord სახელი *">Discord Username *</label>
+            <input type="text" id="discord" placeholder="john#1234 or @john">
+            <div class="field-error" id="discordErr" data-en="Required" data-ka="სავალდებულო">Required</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label data-en="Steam Profile URL" data-ka="Steam პროფილის URL">Steam Profile URL</label>
+              <input type="url" id="steam" placeholder="https://steamcommunity.com/...">
+            </div>
+            <div class="form-group">
+              <label data-en="Current Rank *" data-ka="ამჟამინდელი რანგი *">Current Rank *</label>
+              <select id="rank">
+                <option value="">Select rank...</option>
+                <option>Silver I–IV</option>
+                <option>Gold Nova I–IV</option>
+                <option>MG I–II</option>
+                <option>DMG</option>
+                <option>LE</option>
+                <option>LEM</option>
+                <option>Supreme</option>
+                <option>Global Elite</option>
+              </select>
+              <div class="field-error" id="rankErr" data-en="Select your rank" data-ka="აირჩიე შენი რანგი">Select your rank</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-en="Choose Plan *" data-ka="გეგმის არჩევა *">Choose Plan *</label>
+            <div class="plan-selector">
+              <div class="plan-opt sel-normal" onclick="selectPlan(this,'Normal')">
+                <div class="po-name">NORMAL</div><div class="po-price">$19/mo</div>
+              </div>
+              <div class="plan-opt sel-gold" onclick="selectPlan(this,'Gold')">
+                <div class="po-name">GOLD</div><div class="po-price">$39/mo</div>
+              </div>
+              <div class="plan-opt sel-premium" onclick="selectPlan(this,'Premium')">
+                <div class="po-name">PREMIUM</div><div class="po-price">$79/mo</div>
+              </div>
+            </div>
+            <div class="field-error" id="planErr" data-en="Select a plan" data-ka="აირჩიე გეგმა">Select a plan</div>
+          </div>
+
+          <div class="form-group">
+            <label data-en="Your Goals" data-ka="შენი მიზნები">Your Goals</label>
+            <textarea id="goals" placeholder="What do you want to improve? (e.g. aim, game sense, rank...)"></textarea>
+          </div>
+
+          <div class="form-group" style="display:flex;align-items:flex-start;gap:10px;margin-top:4px;">
+            <input type="checkbox" id="agreeTerms" style="width:auto;margin-top:3px;accent-color:var(--premium);">
+            <label for="agreeTerms" style="font-size:13px;color:var(--muted);font-weight:400;" data-en="I agree to the terms of service and coaching guidelines." data-ka="ვეთანხმები მომსახურების პირობებსა და კოუჩინგის გაიდლაინებს.">I agree to the terms of service and coaching guidelines.</label>
+          </div>
+          <div class="field-error" id="termsErr" data-en="You must agree to continue" data-ka="გაგრძელებისთვის საჭიროა თანხმობა">You must agree to continue</div>
+
+          <button class="submit-btn" onclick="submitRegistration()" data-en="CREATE MY ACCOUNT →" data-ka="ანგარიშის შექმნა →">CREATE MY ACCOUNT →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="logo-sm">CS2 COACH</div>
   <p data-en="© 2025 CS2 Coach · All rights reserved" data-ka="© 2025 CS2 Coach · ყველა უფლება დაცულია">© 2025 CS2 Coach · All rights reserved</p>
-  <p style="margin-top:8px; font-size:11px;" data-en="Not affiliated with Valve Corporation." data-ka="არ არის Valve Corporation-ის შვილობილი.">Not affiliated with Valve Corporation.</p>
+  <p style="margin-top:8px;font-size:11px;" data-en="Not affiliated with Valve Corporation." data-ka="არ არის Valve Corporation-ის შვილობილი.">Not affiliated with Valve Corporation.</p>
 </footer>
 
 <script>
-  // Language system
-  let currentLang = 'en';
-  function setLang(lang) {
-    currentLang = lang;
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase().startsWith(lang === 'en' ? 'e' : 'q') || (lang === 'ka' && b.textContent.trim() === 'ქარ') || (lang === 'en' && b.textContent.trim() === 'EN')));
-    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
-      el.innerHTML = el.getAttribute('data-' + lang);
-    });
-    document.documentElement.lang = lang === 'ka' ? 'ka' : 'en';
+// ---- LANGUAGE ----
+let currentLang = 'en';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang);
+  });
+  document.documentElement.lang = lang === 'ka' ? 'ka' : 'en';
+}
+document.querySelectorAll('.lang-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    const l = b.textContent.trim() === 'EN' ? 'en' : 'ka';
+    document.querySelectorAll('.lang-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    setLang(l);
+  });
+});
+
+// ---- SCROLL ----
+function scrollTo(sel) {
+  document.querySelector(sel)?.scrollIntoView({ behavior: 'smooth' });
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); scrollTo(a.getAttribute('href')); });
+});
+
+// ---- FADE UP ----
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ---- CALENDAR ----
+const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTHS_KA = ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'];
+const DAY_NAMES = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+let calYear, calMonth;
+let selectedDate = null, selectedTime = null;
+let selectedSessionType = 'VOD Review', selectedSessionDur = '45 min';
+
+// Simulate some booked slots per date
+const bookedSlots = {};
+function getBookedForDate(dateStr) {
+  if (!bookedSlots[dateStr]) {
+    // randomly pre-book 1-2 slots for demo
+    const all = getTimeSlotsForDate(dateStr);
+    const n = Math.floor(Math.random() * 2);
+    bookedSlots[dateStr] = all.filter((_, i) => i < n);
   }
-  // Fix lang buttons
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.addEventListener('click', () => {
-      const l = b.textContent.trim() === 'EN' ? 'en' : 'ka';
-      document.querySelectorAll('.lang-btn').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-      setLang(l);
-    });
+  return bookedSlots[dateStr];
+}
+
+function getTimeSlotsForDate(dateStr) {
+  const d = new Date(dateStr);
+  const dow = d.getDay();
+  if (dow === 0) return ['10:00','12:00','15:00','18:00'];
+  if (dow === 6) return ['09:00','11:00','13:00','15:00','17:00'];
+  return ['16:00','17:30','19:00','20:30'];
+}
+
+function initCalendar() {
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const months = currentLang === 'ka' ? MONTHS_KA : MONTHS_EN;
+  document.getElementById('calMonthLabel').textContent = months[calMonth] + ' ' + calYear;
+
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+
+  DAY_NAMES.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-day-name';
+    el.textContent = d;
+    grid.appendChild(el);
   });
 
-  // Scroll fade-up
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
-  // Smooth anchor
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-    });
+  for (let i = 0; i < firstDay; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day empty';
+    grid.appendChild(el);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(calYear, calMonth, d);
+    const dateStr = date.toISOString().split('T')[0];
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.textContent = d;
+
+    const isPast = date < today;
+    if (isPast) {
+      el.classList.add('past');
+    } else {
+      el.classList.add('has-slot');
+      if (date.toDateString() === today.toDateString()) el.classList.add('today');
+      if (selectedDate === dateStr) el.classList.add('selected');
+      el.addEventListener('click', () => selectDate(dateStr));
+    }
+    grid.appendChild(el);
+  }
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+function selectDate(dateStr) {
+  selectedDate = dateStr;
+  selectedTime = null;
+  renderCalendar();
+  renderTimeSlots();
+  updateSummary();
+}
+
+function renderTimeSlots() {
+  const container = document.getElementById('timeSlotsContainer');
+  if (!selectedDate) {
+    container.innerHTML = `<div class="no-date-msg" data-en="← Select a date to see available times" data-ka="← აირჩიე თარიღი">← Select a date to see available times</div>`;
+    return;
+  }
+  const slots = getTimeSlotsForDate(selectedDate);
+  const booked = getBookedForDate(selectedDate);
+  const wrap = document.createElement('div');
+  wrap.className = 'time-slots';
+  slots.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'time-slot';
+    if (booked.includes(t)) {
+      el.classList.add('booked');
+      el.textContent = t;
+    } else {
+      el.textContent = t;
+      if (selectedTime === t) el.classList.add('selected');
+      el.addEventListener('click', () => { selectedTime = t; renderTimeSlots(); updateSummary(); });
+    }
+    wrap.appendChild(el);
   });
+  container.innerHTML = '';
+  container.appendChild(wrap);
+}
+
+function updateSummary() {
+  const summary = document.getElementById('bookingSummary');
+  const btn = document.getElementById('confirmBookingBtn');
+  if (selectedDate && selectedTime) {
+    const d = new Date(selectedDate + 'T12:00:00');
+    const opts = { weekday:'short', month:'short', day:'numeric' };
+    document.getElementById('summaryDate').textContent = d.toLocaleDateString('en-US', opts);
+    document.getElementById('summaryTime').textContent = selectedTime;
+    document.getElementById('summarySession').textContent = selectedSessionType;
+    summary.classList.add('show');
+    btn.disabled = false;
+  } else {
+    summary.classList.remove('show');
+    btn.disabled = true;
+  }
+}
+
+function selectSessionType(el) {
+  document.querySelectorAll('.session-type').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  selectedSessionType = el.dataset.type;
+  selectedSessionDur = el.dataset.dur;
+  updateSummary();
+}
+
+// ---- MODAL ----
+function openModal() {
+  if (!selectedDate || !selectedTime) return;
+  const d = new Date(selectedDate + 'T12:00:00');
+  document.getElementById('modalDate').textContent = d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+  document.getElementById('modalTime').textContent = selectedTime;
+  document.getElementById('modalSession').textContent = selectedSessionType;
+  document.getElementById('modalDuration').textContent = selectedSessionDur;
+  document.getElementById('bookingModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('bookingModal').classList.remove('open');
+}
+document.getElementById('bookingModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function finalizeBooking() {
+  // Mark the slot as booked
+  if (!bookedSlots[selectedDate]) bookedSlots[selectedDate] = [];
+  bookedSlots[selectedDate].push(selectedTime);
+  closeModal();
+  // Show success feedback on the calendar card
+  const btn = document.getElementById('confirmBookingBtn');
+  btn.textContent = '✓ BOOKED!';
+  btn.style.background = 'var(--success)';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = currentLang === 'ka' ? 'დაჯავშნის დადასტურება →' : 'CONFIRM BOOKING →';
+    btn.style.background = '';
+    btn.disabled = true;
+    selectedDate = null; selectedTime = null;
+    renderCalendar(); renderTimeSlots(); updateSummary();
+  }, 3000);
+}
+
+// ---- REGISTRATION FORM ----
+let selectedPlan = '';
+
+function selectPlan(el, plan) {
+  document.querySelectorAll('.plan-opt').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  selectedPlan = plan;
+  document.getElementById('planErr').classList.remove('show');
+}
+
+function validateField(id, errId, checkFn) {
+  const el = document.getElementById(id);
+  const err = document.getElementById(errId);
+  const valid = checkFn(el.value.trim());
+  el.classList.toggle('error', !valid);
+  err.classList.toggle('show', !valid);
+  return valid;
+}
+
+function submitRegistration() {
+  let ok = true;
+  ok = validateField('firstName','firstNameErr', v => v.length > 0) && ok;
+  ok = validateField('lastName','lastNameErr', v => v.length > 0) && ok;
+  ok = validateField('email','emailErr', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) && ok;
+  ok = validateField('discord','discordErr', v => v.length > 0) && ok;
+  ok = validateField('rank','rankErr', v => v !== '') && ok;
+
+  if (!selectedPlan) {
+    document.getElementById('planErr').classList.add('show');
+    ok = false;
+  }
+
+  const terms = document.getElementById('agreeTerms');
+  const termsErr = document.getElementById('termsErr');
+  if (!terms.checked) {
+    termsErr.classList.add('show');
+    ok = false;
+  } else {
+    termsErr.classList.remove('show');
+  }
+
+  if (!ok) return;
+
+  // Simulate submission
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = currentLang === 'ka' ? 'იგზავნება...' : 'CREATING ACCOUNT...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    document.getElementById('regForm').style.display = 'none';
+    document.getElementById('regSuccessPanel').classList.add('show');
+  }, 1200);
+}
+
+function resetForm() {
+  document.getElementById('regForm').style.display = '';
+  document.getElementById('regSuccessPanel').classList.remove('show');
+  ['firstName','lastName','email','discord','steam','goals'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.classList.remove('error'); }
+  });
+  document.getElementById('rank').value = '';
+  document.getElementById('agreeTerms').checked = false;
+  document.querySelectorAll('.plan-opt').forEach(e => e.classList.remove('active'));
+  selectedPlan = '';
+  ['firstNameErr','lastNameErr','emailErr','discordErr','rankErr','planErr','termsErr'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+  const btn = document.querySelector('.submit-btn');
+  btn.disabled = false;
+  btn.textContent = currentLang === 'ka' ? 'ანგარიშის შექმნა →' : 'CREATE MY ACCOUNT →';
+}
+
+// Init
+initCalendar();
 </script>
 </body>
 </html>
