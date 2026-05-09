@@ -8,7 +8,7 @@ Personal CS2 coaching website with Georgian and English language support.
 - Fully responsive design
 
 ## Live Site
-[cs2coach.ge](https://chujoi.ge)
+[chujoi.ge](https://chujoi.ge)
 
 ## Tech
 Pure HTML, CSS, JavaScript — no frameworks or dependencies.
